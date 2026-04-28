@@ -1,4 +1,4 @@
-name: Deploy Hugo to GitHub Pages
+name: 发布Hugo网站到Pages
 
 on:
   push:
@@ -15,29 +15,46 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+defaults:
+  run:
+    shell: bash
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      HUGO_VERSION: 0.120.2
     steps:
-      - name: Checkout
+      - name: 安装Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+      - name: 安装Dart Sass
+        run: sudo snap install dart-sass
+      - name: 检出
         uses: actions/checkout@v4
         with:
           submodules: recursive
           fetch-depth: 0
-
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
-        with:
-          hugo-version: 'latest'
-          extended: true
-
-      - name: Build
-        run: hugo --minify --cleanDestinationDir
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: 设置Pages
+        id: pages
+        uses: actions/configure-pages@v3
+      - name: 安装Node.js依赖
+        run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+      - name: 使用Hugo构建
+        env:
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
+        run: |
+          hugo \
+            --gc \
+            --minify \
+            --baseURL "${{ steps.pages.outputs.base_url }}/"
+      - name: 上传构建产物
+        uses: actions/upload-pages-artifact@v2
         with:
           path: ./public
 
@@ -48,6 +65,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Deploy to GitHub Pages
+      - name: 部署到GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v2
