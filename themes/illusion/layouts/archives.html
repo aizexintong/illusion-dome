@@ -1,0 +1,198 @@
+{{ define "main" }}
+<div class="section-content">
+  <div class="container">
+    <section class="page-header" data-aos="fade-up">
+      <h1 class="page-title">{{ .Title }}</h1>
+      <p class="page-description">{{ .Description | default (i18n "archivestitle") }}</p>
+    </section>
+
+    <div class="archives-container" data-aos="fade-up">
+      {{ $posts := where site.RegularPages "Type" "posts" }}
+      {{ $totalPosts := len $posts }}
+      
+      <div class="archives-summary">
+        <span class="archives-count">
+          <i class="fas fa-file-alt"></i>
+          {{ i18n "archivescount" (dict "Count" $totalPosts) }}
+        </span>
+      </div>
+
+      {{ range ($posts.GroupByDate "2006") }}
+      <div class="archive-year" data-aos="fade-up">
+        <h2 class="archive-year-title">
+          <i class="fas fa-calendar-alt"></i>
+          {{ .Key }}
+          <span class="archive-year-count">{{ i18n "archivesyearcount" (dict "Count" (len .Pages)) }}</span>
+        </h2>
+        
+        <div class="archive-months">
+          {{ range (.Pages.GroupByDate "01") }}
+           <div class="archive-month">
+            {{ $monthNum := .Key }}
+            {{ $monthKeys := dict 
+              "01" "month01" "02" "month02" "03" "month03" "04" "month04" 
+              "05" "month05" "06" "month06" "07" "month07" "08" "month08" 
+              "09" "month09" "10" "month10" "11" "month11" "12" "month12" 
+            }}
+            {{ $monthKey := index $monthKeys $monthNum | default $monthNum }}
+            {{ $monthName := i18n $monthKey | default $monthNum }}
+            
+            <h3 class="archive-month-title">{{ $monthName }}</h3>
+            
+            <ul class="archive-list">
+              {{ range .Pages }}
+              <li class="archive-item">
+                <a href="{{ .RelPermalink }}" class="archive-link">
+                  <span class="archive-date">{{ .Date.Format "01-02" }}</span>
+                  <span class="archive-title">{{ .Title }}</span>
+                  {{ if .Params.categories }}
+                    <span class="archive-category">{{ index .Params.categories 0 }}</span>
+                  {{ end }}
+                </a>
+              </li>
+              {{ end }}
+            </ul>
+          </div>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+
+<style>
+  .archives-summary {
+    text-align: center;
+    margin-bottom: var(--sp-8);
+  }
+  
+  .archives-count {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    background: var(--c-primary-ll);
+    color: var(--c-primary-d);
+    padding: var(--sp-3) var(--sp-5);
+    border-radius: var(--r-full);
+    font-weight: var(--fw-medium);
+  }
+  
+  .archive-year {
+    margin-bottom: var(--sp-10);
+  }
+  
+  .archive-year-title {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    font-size: var(--fs-xl);
+    color: var(--c-text);
+    padding-bottom: var(--sp-3);
+    border-bottom: 2px solid var(--c-border);
+    margin-bottom: var(--sp-6);
+  }
+  
+  .archive-year-title i {
+    color: var(--c-primary);
+  }
+  
+  .archive-year-count {
+    font-size: var(--fs-sm);
+    color: var(--c-text-2);
+    font-weight: var(--fw-normal);
+    margin-left: auto;
+  }
+  
+  .archive-month {
+    margin-bottom: var(--sp-6);
+  }
+  
+  .archive-month-title {
+    font-size: var(--fs-base);
+    color: var(--c-text-2);
+    margin-bottom: var(--sp-3);
+    padding-left: var(--sp-4);
+    font-weight: var(--fw-medium);
+  }
+  
+  .archive-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .archive-item {
+    margin-bottom: var(--sp-2);
+  }
+  
+  .archive-link {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    padding: var(--sp-3) var(--sp-4);
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--r-lg);
+    text-decoration: none;
+    transition: all var(--t-fast) var(--ease-out);
+    border: 1px solid transparent;
+  }
+  
+  .archive-link:hover {
+    background: var(--c-primary-ll);
+    border-color: var(--c-primary-l);
+    transform: translateX(4px);
+  }
+
+  [data-theme="dark"] .archive-link {
+    background: rgba(26, 27, 58, 0.5);
+  }
+
+  [data-theme="dark"] .archive-link:hover {
+    background: rgba(26, 27, 58, 0.7);
+    border-color: var(--c-primary-400);
+  }
+  
+  .archive-date {
+    font-size: var(--fs-sm);
+    color: var(--c-text-3);
+    font-family: var(--ff-mono);
+    flex-shrink: 0;
+  }
+  
+  .archive-title {
+    flex: 1;
+    color: var(--c-text);
+    font-weight: var(--fw-medium);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .archive-link:hover .archive-title {
+    color: var(--c-primary);
+  }
+  
+  .archive-category {
+    font-size: var(--fs-xs);
+    background: var(--c-primary-ll);
+    color: var(--c-primary-d);
+    padding: var(--sp-1) var(--sp-2);
+    border-radius: var(--r-full);
+    flex-shrink: 0;
+  }
+  
+  @media (max-width: 575px) {
+    .archive-link {
+      flex-wrap: wrap;
+    }
+    
+    .archive-category {
+      width: 100%;
+      margin-top: var(--sp-1);
+    }
+  }
+</style>
+{{ end }}

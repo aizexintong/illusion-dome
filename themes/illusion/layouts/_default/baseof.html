@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.LanguageCode }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  <!-- 背景层 -->
+  <div class="bg-layer bg-image-layer">
+    {{- $assets := hugo.Data.assets -}}
+    {{- $bg := $assets.background.adaptive.url | default "https://t.alcy.cc/ycy" -}}
+    <img src="{{ $bg }}" alt="背景图片" class="bg-image" loading="lazy">
+  </div>
+  <div class="bg-layer bg-overlay-layer"></div>
+
+  <!-- 内容层 -->
+  <div class="content-wrapper">
+    <header>
+      {{ partial "header.html" . }}
+    </header>
+    <main id="main">
+      {{ block "main" . }}{{ end }}
+    </main>
+    <footer>
+      {{ partial "footer.html" . }}
+    </footer>
+  </div>
+
+  <!-- 搜索弹窗 -->
+  {{ partial "search-modal.html" . }}
+
+  <!-- 返回顶部/底部按钮 -->
+  <div class="scroll-buttons" id="scroll-buttons">
+    <button class="scroll-btn scroll-to-top" aria-label="{{ i18n "scrolltotop" }}" title="{{ i18n "scrolltotop" }}">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+    <button class="scroll-btn scroll-to-bottom" aria-label="{{ i18n "scrolltobottom" }}" title="{{ i18n "scrolltobottom" }}">
+      <i class="fas fa-chevron-down"></i>
+    </button>
+  </div>
+
+  <!-- 图片灯箱 -->
+  <div class="img-lightbox" id="img-lightbox">
+    <button class="img-lightbox-close" aria-label="{{ i18n "close" }}">
+      <i class="fas fa-times"></i>
+    </button>
+    <img src="" alt="" id="img-lightbox-img">
+  </div>
+
+  <!-- 第三方库脚本 (延迟加载) -->
+  <script defer src="{{ "lib/aos/aos.js" | relURL }}"></script>
+  <script defer src="{{ "lib/typed.js/typed.js" | relURL }}"></script>
+
+  <!-- 主题配置 -->
+  <script>
+    window.themeConfig = {
+      lightLabel: "{{ i18n "themLightLabel" }}",
+      darkLabel: "{{ i18n "themDarkLabel" }}",
+      systemLabel: "{{ i18n "themSystemLabel" }}"
+    };
+  </script>
+</body>
+</html>

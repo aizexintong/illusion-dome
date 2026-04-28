@@ -1,0 +1,120 @@
+baseURL = 'https://azxt.org/'
+languageCode = 'zh-CN'
+languageName = '中文'
+title = '爱则心痛 | azxt'
+theme = 'illusion'
+defaultContentLanguage = 'zh'
+defaultContentLanguageInSubdir = false
+
+[params]
+  author = "爱则心痛"
+  description = "爱则心痛的个人博客 - 分享技术、生活和思考"
+  email = "admin@azxt.org"
+  github = "aizexintong"
+  domain = "azxt.org"
+
+  enableDarkMode = true
+  enableSearch = true
+  searchProvider = "local"
+  enableParticles = true
+  enable3DEffects = true
+  enableScrollAnimations = true
+  enableTypewriter = true
+  enableAccessibility = true
+  enableTOC = true
+  enableComments = false
+  lazyLoadImages = true
+
+  enableSchema = true
+  enableOpenGraph = true
+  enableTwitterCards = true
+
+  siteTime = "2026-04-01T00:00:00+08:00"
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    noClasses = false
+    tabWidth = 2
+    lineNos = false
+
+[menus]
+  [[menus.main]]
+    name = '主页'
+    pageRef = '/'
+    weight = 5
+    [menus.main.params]
+      icon = 'fas fa-home'
+
+  [[menus.main]]
+    name = '文章'
+    pageRef = '/posts'
+    weight = 10
+    [menus.main.params]
+      icon = 'fas fa-file-alt'
+
+  [[menus.main]]
+    name = '归档'
+    url = '/archives/'
+    weight = 15
+    [menus.main.params]
+      icon = 'fas fa-archive'
+
+  [[menus.main]]
+    name = '标签'
+    pageRef = '/tags/'
+    weight = 20
+    [menus.main.params]
+      icon = 'fas fa-tags'
+
+  [[menus.main]]
+    name = '关于'
+    pageRef = '/about'
+    weight = 30
+    [menus.main.params]
+      icon = 'fas fa-user'
+
+  [[menus.main]]
+    name = '技能'
+    url = '/skills/'
+    weight = 40
+    [menus.main.params]
+      icon = 'fas fa-code'
+
+  [[menus.main]]
+    name = '友链'
+    url = '/links/'
+    weight = 50
+    [menus.main.params]
+      icon = 'fas fa-link'
+
+  [[menus.main]]
+    name = '工具'
+    url = '/tools/'
+    weight = 60
+    [menus.main.params]
+      icon = 'fas fa-tools'
+
+  [[menus.footer]]
+    name = '隐私政策'
+    url = '/privacy/'
+    weight = 10
+    [menus.footer.params]
+      icon = 'fas fa-shield-alt'
+
+  [[menus.footer]]
+    name = '使用条款'
+    url = '/terms/'
+    weight = 20
+    [menus.footer.params]
+      icon = 'fas fa-file-contract'
+
+[outputs]
+  home = ["HTML", "JSON", "RSS"]
+  page = ["HTML"]
+
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5
