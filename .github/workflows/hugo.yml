@@ -1,10 +1,10 @@
 # Sample workflow for building and deploying a Hugo site to GitHub Pages
-name: Deploy Hugo site to Pages
+name: 将 Hugo 网站部署到 Pages 页面中
 
-于:
+on:
   # Runs on pushes targeting the default branch
   push:
-    分支: ["main"]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
