@@ -2,12 +2,13 @@
 name: 将 Hugo 网站部署到 Pages 页面中
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+  repository_dispatch:
+    types: [theme-updated]
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -43,6 +44,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
+      - name: Update theme to latest
+        run: |
+          git submodule update --remote themes/illusion
+          cd themes/illusion && git log --oneline -3
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
