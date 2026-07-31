@@ -1,18 +1,34 @@
+# =============================================================================
+# 幻梦 Illusion 主题 - Hugo 站点配置
+# 使命：站点核心配置与功能开关，后期随心调整的主要文件
+# 修改频率：经常调整
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# 站点基本信息
+# ---------------------------------------------------------------------------
 baseURL = 'https://azxt.org/'
 locale = 'zh-CN'
 languageName = '中文'
-title = '爱则心痛 | azxt'
+title = '爱则心痛(演示) | azxt'
 theme = 'illusion'
 defaultContentLanguage = 'zh'
 defaultContentLanguageInSubdir = false
+enableGitInfo = true
 
+# ---------------------------------------------------------------------------
+# 功能开关（最常调整的部分）
+# ---------------------------------------------------------------------------
 [params]
-  author = "爱则心痛"
-  description = "爱则心痛的个人博客 - 分享技术、生活和思考"
+  # -- 个人信息 --
+  author = "爱则心痛(演示)"
+  description = "爱则心痛(演示)的个人博客 - 分享技术、生活和思考"
   email = "admin@azxt.org"
   github = "aizexintong"
   domain = "azxt.org"
+  siteTime = "2026-04-01T00:00:00+08:00"
 
+  # -- 功能开关 --
   enableDarkMode = true
   enableSearch = true
   searchProvider = "local"
@@ -25,23 +41,17 @@ defaultContentLanguageInSubdir = false
   enableComments = false
   lazyLoadImages = true
 
+  # -- SEO / 社交分享 --
   enableSchema = true
   enableOpenGraph = true
   enableTwitterCards = true
 
-  siteTime = "2026-04-01T00:00:00+08:00"
-
-[markup]
-  [markup.highlight]
-    codeFences = true
-    guessSyntax = true
-    noClasses = false
-    tabWidth = 2
-    lineNos = false
-
+# ---------------------------------------------------------------------------
+# 导航菜单
+# ---------------------------------------------------------------------------
 [menus]
   [[menus.main]]
-    name = '主页'
+    name = '首页'
     pageRef = '/'
     weight = 5
     [menus.main.params]
@@ -96,6 +106,7 @@ defaultContentLanguageInSubdir = false
     [menus.main.params]
       icon = 'fas fa-tools'
 
+  # 页脚导航
   [[menus.footer]]
     name = '隐私政策'
     url = '/privacy/'
@@ -110,10 +121,30 @@ defaultContentLanguageInSubdir = false
     [menus.footer.params]
       icon = 'fas fa-file-contract'
 
+# ---------------------------------------------------------------------------
+# Markdown 渲染与代码高亮
+# ---------------------------------------------------------------------------
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    noClasses = false
+    tabWidth = 2
+    lineNos = false
+
+# ---------------------------------------------------------------------------
+# 输出格式
+# ---------------------------------------------------------------------------
 [outputs]
   home = ["HTML", "JSON", "RSS"]
   page = ["HTML"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+  term = ["HTML", "RSS"]
 
+# ---------------------------------------------------------------------------
+# Sitemap
+# ---------------------------------------------------------------------------
 [sitemap]
   changefreq = "weekly"
   filename = "sitemap.xml"
