@@ -22,6 +22,7 @@
 - **搜索**: 本地客户端搜索，Ctrl+K 快捷键
 - **粒子特效**: Canvas 糖果雨 / 星空萤火虫双模式
 - **打字机**: Typed.js 首页轮播文案
+- **数学公式**: 内置 KaTeX（LaTeX）渲染，行内 `$...$` 与独立 `$$...$$` 开箱即用
 - **所有页面**: 首页、文章、归档、标签、关于、技能、友链、工具
 
 ---
@@ -115,7 +116,7 @@ illusion-dome/
 
 本仓库使用的主题仓库: [aizexintong/illusion](https://github.com/aizexintong/illusion)
 
-主题特性包括三模主题切换、Canvas 粒子特效、毛玻璃 UI、AOS 滚动动画、本地搜索等，详见主题 README。
+主题特性包括三模主题切换、Canvas 粒子特效、毛玻璃 UI、AOS 滚动动画、本地搜索、KaTeX 公式渲染等，详见主题 README。
 
 ---
 
