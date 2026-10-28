@@ -10,6 +10,10 @@ on:
   repository_dispatch:
     types: [theme-updated]
 
+  # 定时兜底：主题仓库的跨仓库通知失败时，每天也会拉取最新主题并重建
+  schedule:
+    - cron: '0 3 * * *'
+
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
